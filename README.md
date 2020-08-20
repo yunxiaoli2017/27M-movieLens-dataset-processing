@@ -10,7 +10,7 @@ Number of ratings: 27753444 (values from 0.5 to 5 at step of 0.5)
 ## Processed movies dataset
 
 ### Scrap posters from [IMDB](https://www.imdb.com/)
-yields 53806 movies with imdb_id, imdb_url, and poster_url from 58098 movies in original dataset
+Scrap imdb_id, imdb_url, and poster_url for movies. Yields 53806 movies from 58098 movies in original dataset. (Movies without available infos are not included in processed dataset)
 
 ### Normalize ratings with Decoupling Normalization method
 
@@ -21,8 +21,8 @@ normalized(r) = percentage( all ratings by the same rater < r) + percentage(all 
 
 * Why choosing it against Gaussian Normalization?
 
- ** The paper [A Study of Methods for Normalizing User Ratings in Collaborative Filtering"](https://www.cs.purdue.edu/homes/lsi/sigir04-cf-norm.pdf) compares these two normalization methods for single-criteria collaborative filtering on a small dataset.
+ * The paper [A Study of Methods for Normalizing User Ratings in Collaborative Filtering"](https://www.cs.purdue.edu/homes/lsi/sigir04-cf-norm.pdf) compares these two normalization methods for single-criteria collaborative filtering on a small dataset.
     This paper [IMPROVING ACCURACY OF MULTI-CRITERIA COLLABORATIVE FILTERING BY NORMALIZING USER RATINGS](https://pdfs.semanticscholar.org/0a38/aa813f16540ba2eaa3eda3a08f7c3814e079.pdf) compares these two normalization methods for multi-criteria collaborative filtering on a larger dataset
     Both concludes that Decoupling Normalization yields better results.
 
- ** When comparing normalized ratings of example users in this specific dataset, the basic observation is that Decoupling Normalization differentiates ratings in middle-high range (3, 4) better, which is where most ratings reside. See [MovieLens-Exploratory-Data-Analysis.ipynb](./MovieLens-Exploratory-Data-Analysis.ipynb) for more info.
+ * When comparing normalized ratings of example users in this specific dataset, the basic observation is that Decoupling Normalization differentiates ratings in middle-high range (3, 4) better, which is where most ratings reside. See [MovieLens-Exploratory-Data-Analysis.ipynb](./MovieLens-Exploratory-Data-Analysis.ipynb) for more info.
