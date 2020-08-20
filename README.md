@@ -19,9 +19,10 @@ Processed movieLens dataset with 27M ratings. Scrap poster_url from IMDB for mov
 * What is Decoupling Normalization?
 
   * Decoupling Normalization evaluates a rating r with respect to other ratings made by the same rater, mapping its value to range(0, 1)
-normalized(r) = percentage( all ratings by the same rater < r) + percentage(all ratings by the same rater = r) / 2
   
-  * In comparison, Gaussian Normalization is to normalize ratings of a rater to have mean of 0 and standard deviation of 1 (or other fixed value).
+    normalized(r) = percentage( all ratings by the same rater < r) + percentage(all ratings by the same rater = r) / 2
+  
+  * In comparison, Gaussian Normalization is to normalize ratings of a rater to have mean of 0 and standard deviation of 1.
 
 * Why choosing it against Gaussian Normalization?
 
