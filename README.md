@@ -1,5 +1,6 @@
 # 27M-movieLens-dataset-processing
-Processed movieLens dataset with 27M ratings. Scrap poster_url from IMDB for movies; Normalized ratings with decoupling normalization.
+
+Processed movieLens dataset with 27M ratings for use of Java movie recommendation engine in [movie-recommender](https://github.com/yunxiaoli2017/movie-recommender).
 
 ## Original dataset
 [https://grouplens.org/datasets/movielens/latest/](https://grouplens.org/datasets/movielens/latest/)
@@ -7,14 +8,13 @@ Processed movieLens dataset with 27M ratings. Scrap poster_url from IMDB for mov
 * Number of movies: 58098
 * Number of ratings: 27753444 (values from 0.5 to 5 at step of 0.5)
 
-## Processed movies dataset
+## Processing movies dataset (Scrap posters from [IMDB](https://www.imdb.com/))
 
-### Scrap posters from [IMDB](https://www.imdb.com/)
 * Scrap imdb_id, imdb_url, and poster_url for movies. 
 
 * Yields 53806 movies from 58098 movies in original dataset. (Movies without available infos are not included in processed dataset)
 
-### Normalize ratings with Decoupling Normalization method
+## Processing ratings dataset (Normalize ratings with Decoupling Normalization method)
 
 * What is Decoupling Normalization?
 
@@ -26,10 +26,34 @@ Processed movieLens dataset with 27M ratings. Scrap poster_url from IMDB for mov
 
 * Why choosing it against Gaussian Normalization?
 
-  * The paper [A Study of Methods for Normalizing User Ratings in Collaborative Filtering"](https://www.cs.purdue.edu/homes/lsi/sigir04-cf-norm.pdf) compares these two normalization methods for single-criteria collaborative filtering on a small dataset.
+  * There're papers like
   
-    This paper [IMPROVING ACCURACY OF MULTI-CRITERIA COLLABORATIVE FILTERING BY NORMALIZING USER RATINGS](https://pdfs.semanticscholar.org/0a38/aa813f16540ba2eaa3eda3a08f7c3814e079.pdf) compares these two normalization methods for multi-criteria collaborative filtering on a larger dataset.
-    
-    Both concludes that Decoupling Normalization yields better results.
+  [A Study of Methods for Normalizing User Ratings in Collaborative Filtering"](https://www.cs.purdue.edu/homes/lsi/sigir04-cf-norm.pdf) and 
+  
+  [IMPROVING ACCURACY OF MULTI-CRITERIA COLLABORATIVE FILTERING BY NORMALIZING USER RATINGS](https://pdfs.semanticscholar.org/0a38/aa813f16540ba2eaa3eda3a08f7c3814e079.pdf) 
+  that compare these two normalization methods and conclude that Decoupling Normalization yields better results.
 
-  * When comparing normalized ratings of example users in this specific dataset, the basic observation is that Decoupling Normalization differentiates ratings in middle-high range (3, 4) better, which is where most ratings reside. See [MovieLens-Exploratory-Data-Analysis.ipynb](./MovieLens-Exploratory-Data-Analysis.ipynb) for more info.
+  * When comparing normalized ratings of example users in this specific dataset, the basic observation is that Decoupling Normalization differentiates ratings in middle-high range (3, 4) better, which is where most ratings reside. See [movieLens-data-processing.ipynb](./movieLens-data-processing.ipynb) for more info.
+  
+## Extract a popular movies dataset
+
+* Motivation
+
+  * In this web app, users are first prompted to rate some randomly picked movies from dataset. And recommendations will be based on that. The problem is, users won't find many movies they knew before. Drawing movies from a relatively popular subset of full dataset will attenuate this problem.
+  
+## Extract a compact ratings dataset
+
+* Motivation
+  
+  * The time cost to generate recommendations was quite high, mainly from the step of querying for ratings on a certain movie from 25 million rows. 
+  * Creating index on movie_id column alone isn't enough, because some movies have more than 10,000 ratings and pulling that many rows often end up with a bitmap scan.
+  * From another perspective, different numbers of ratings for movies present a bias on recommendation: the algorithm will lean towards finding more raters with similar tastes on those particular movies with huge number of ratings, and fewer raters on movies with fewer ratings.
+  
+* Approach
+
+  * Raters with fewer ratings are harder to be utilized, especially when they mainly rate those over-represented movies. (chosen as movies with more than 5,000 ratings) Two million ratings associated with these raters and over-represented movies are removed.
+  
+  * Ratings on movies with more than 1,000 ratings get subsampled to 1,000 ~ 2,000 ratings only, leaving 4 million ratings in total. See [form-compact-ratings-and-popular-movies.ipynb](./form-compact-ratings-and-popular-movies.ipynb) for more info.
+  
+  * Note that the compact ratings dataset is only needed when identifying similar users. When generating top recommended movies there's no time cost issue to use full dataset.
+  
