@@ -42,7 +42,7 @@ Processed movieLens dataset with 27M ratings for use of Java movie recommendatio
   * In this web app, users are first prompted to rate some randomly picked movies from dataset. And recommendations will be based on that. The problem is, users won't find many movies they knew before. 
   
 * Approach
-  * Form a popular movies dataset with a subset of movies, all having more than 1,000 ratings.
+  * Form a popular movies dataset with a subset of movies, all having more than 5,000 ratings.
   
 ## Extract a compact ratings dataset
 
