@@ -3,10 +3,13 @@
 Processed movieLens dataset with 27M ratings for use of Java movie recommendation engine in [movie-recommender](https://github.com/yunxiaoli2017/movie-recommender).
 
 ## Original dataset
-[MovieLens Latest Datasets](https://grouplens.org/datasets/movielens/latest/)
+[MovieLens Latest Dataset](https://grouplens.org/datasets/movielens/latest/)
 * Number of raters: 283228
 * Number of movies: 58098
 * Number of ratings: 27753444 (values from 0.5 to 5 at step of 0.5)
+
+## Processed dataset
+[MovieLens Processed Dataset (shared on Google Drive)](https://drive.google.com/drive/folders/1h066r9Ms0joQNiC30_Fo_zB9Z-LHTyOf?usp=sharing)
 
 ## Processing movies dataset (Scrap posters from [IMDB](https://www.imdb.com/))
 
